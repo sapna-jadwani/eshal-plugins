@@ -1,0 +1,15 @@
+{
+  "name": "eshal-plugins",
+  "description": "Claude Code plugins from ESHAL AI. usage-guard: resume command per session, paste-ready reopen-all block at 95 % plan usage, /resume-all.",
+  "owner": {
+    "name": "ESHAL AI",
+    "url": "https://github.com/sapna-jadwani/eshal-plugins"
+  },
+  "plugins": [
+    {
+      "name": "usage-guard",
+      "source": "./usage-guard",
+      "description": "Resume command per session at start; paste-ready resume-all block at 95 % plan usage; /resume-all skill. Finds the Desktop app's bundled CLI on macOS when claude is not on PATH."
+    }
+  ]
+}
