@@ -24,6 +24,8 @@ bin=$(sh "$(dirname "$0")/claude-bin.sh" 2>/dev/null || true)
 if [ -n "$bin" ] && "$bin" auth status 2>/dev/null | grep -q '"loggedIn": false'; then
   warn="CLI NOT SIGNED IN: the resume command will refuse to run until you sign the CLI in once: \"$bin\" auth login"
   printf '"%s" auth login\n' "$bin" > "$dir/cli-sign-in-command.txt"
+else
+  rm -f "$dir/cli-sign-in-command.txt"
 fi
 
 esc() { printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'; }

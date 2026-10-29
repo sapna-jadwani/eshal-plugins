@@ -1,9 +1,16 @@
 {
   "name": "usage-guard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hands every Claude Desktop session its own resume command at start, and when plan usage reaches 95 % prints a paste-ready block that reopens every recent session after the reset. On macOS it finds the CLI bundled with the Desktop app when claude is not on PATH.",
   "author": {
     "name": "ESHAL AI"
   },
-  "keywords": ["usage", "credit", "resume", "sessions", "desktop", "hooks"]
-}
+  "keywords": [
+    "usage",
+    "credit",
+    "resume",
+    "sessions",
+    "desktop",
+    "hooks"
+  ]
+}\n
