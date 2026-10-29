@@ -83,6 +83,7 @@ Outputs land in `~/.claude/`: `resume-commands.log`, `last-resume-command.txt`, 
 - The printed resume command resolves the bundled CLI from a clean environment (`PATH=/usr/bin:/bin`).
 - `resume-all.sh` builds the same 5-session block on the python3 branch and on the node branch (python3 hidden).
 - `UserPromptSubmit` hook output parses as JSON.
-- `--desktop --resume <id>` from a terminal was not completed on this Mac: the bundled CLI had never been signed in and refused with "requires signing in with a Claude account". The hook now warns about that at session start and writes the sign-in command to `~/.claude/cli-sign-in-command.txt`. Reopening a tab after `auth login` is the one step still to verify on a Mac.
+- `--desktop --resume <id>` run from a pseudo-terminal reopened an idle 10-day-old session as a tab in the Desktop app: the CLI printed "Opening session ... in Claude Desktop", a resumed process for that session appeared, and the session record's last-focused time moved to the moment of the call. The first attempt was refused with "requires signing in with a Claude account" because the bundled CLI had never been signed in; after one `auth login` it worked. That is why the start line warns about the sign-in and writes the command to `~/.claude/cli-sign-in-command.txt`.
+- The installed copy (from the GitHub marketplace, user scope) fires both hooks in a Desktop session: the start line appeared, and the usage check ran at the end of each turn and stayed silent below the threshold.
 
 Windows: the upstream plugin was tested by its author on 22 Oct 2026 (Windows 11, Claude Code 2.1.306, Desktop app 3.16), including an 11-session resume block. The Windows scripts here are unchanged from that version.

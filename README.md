@@ -27,7 +27,7 @@ Each plugin's README covers its requirements and settings. The 95 % check needs 
 
 ## Credits
 
-usage-guard is a fork, adapted for Macs, of [premnaraindas/usage-guard](https://github.com/premnaraindas/usage-guard) by Prem Naraindas (Katonic), MIT. The Windows scripts are his, unchanged.
+usage-guard is a fork, adapted for and tested on macOS, of [premnaraindas/usage-guard](https://github.com/premnaraindas/usage-guard) by Prem Naraindas (Katonic), MIT. The Windows scripts are his, unchanged.
 
 ## Licence
 
