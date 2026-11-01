@@ -6,7 +6,7 @@ A Claude Code plugin for people who run many Claude Desktop sessions at once and
 2. **At 95 % plan usage it prints a paste-ready block for all sessions.** A `UserPromptSubmit` hook asks Claude to check plan usage at the end of every turn. At the threshold it runs the generator and prints one line per recent session, spaced 12 s apart. Paste the block into a terminal after the reset and every session comes back.
 3. **`/resume-all` gives you that block on demand.**
 
-This is a fork of [premnaraindas/usage-guard](https://github.com/premnaraindas/usage-guard) with one change: on macOS and Linux the generated commands find the Claude Code CLI themselves. `claude` on PATH is used when present; otherwise the newest CLI bundled with the Claude Desktop app is used. Without that, every resume line fails on a Mac that runs Claude Code only through the Desktop app, which is the common case.
+This is a fork of [premnaraindas/usage-guard](https://github.com/premnaraindas/usage-guard) (in step with upstream 1.1.0) with one change: on macOS and Linux the generated commands find the Claude Code CLI themselves. `claude` on PATH is used when present; otherwise the newest CLI bundled with the Claude Desktop app is used. Without that, every resume line fails on a Mac that runs Claude Code only through the Desktop app, which is the common case.
 
 ## Requirements
 
@@ -46,6 +46,8 @@ Two things to remove first, or each hook fires twice:
 - Keep launches 7 to 18 s apart. Back-to-back launches fail to register. The generated block uses 12 s.
 - The reopened tabs run under the account the Desktop app is signed into, which can differ from the CLI's `/login` account.
 - The usage windows reported are the 5-hour and weekly plan windows. An organization monthly spend limit is not visible to the check.
+- The app keeps one record per session per store folder, and a session touched from several app instances has a copy in each folder. The generator reads every folder of the current org and builds one line per CLI session id from its latest record, so a session is never listed twice and none is missed because its record sits in an older folder.
+- Child side-sessions (sessions one session started from a task card) are listed under their parent as comments and not reopened by default. A resume by id opens a child as a standalone tab that no longer sits under its parent, and the parent's own line already brings the parent back. `-IncludeChildren` reopens them too; a child whose parent is not in the block is listed in a trailing group.
 - `--desktop` needs a real terminal. It refuses to run with redirected output, so paste the block into Terminal, iTerm or the app's own Terminal panel, not into a script that captures output. On Windows the resume line is `Start-Process ... claude.cmd --desktop --resume <id>` for the same reason.
 - On macOS/Linux the first line of the block sets `c` to the CLI path; every later line runs `"$c" --desktop --resume <id>`. The lookup happens when you paste, so the block survives a Desktop app update that moved the bundled CLI.
 
@@ -56,7 +58,7 @@ Two things to remove first, or each hook fires twice:
 | `USAGE_GUARD_THRESHOLD` | `95` | Percent of any plan window at which the block is printed |
 | `CLAUDE_DESKTOP_SESSIONS_DIR` | app default | Override the Desktop app's session-record folder |
 
-Generator arguments (`/resume-all` passes them through): `-Hours N` (default 48), `-All` (every non-archived session), `-GapSeconds N` (default 12).
+Generator arguments (`/resume-all` passes them through): `-Hours N` (default 48), `-All` (every non-archived session), `-GapSeconds N` (default 12), `-IncludeChildren` (reopen child side-sessions as well).
 
 ## Files
 

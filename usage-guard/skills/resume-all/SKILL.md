@@ -13,7 +13,8 @@ sh "${CLAUDE_PLUGIN_ROOT}/scripts/run.sh" resume-all
 
 - On Windows the block is PowerShell (`Start-Process ... claude --desktop --resume <id>`); print it in a `powershell` fenced block.
 - On macOS/Linux the block is shell; print it in a `bash` fenced block. Its first line finds the Claude Code CLI (`claude` on PATH, else the one bundled with the Desktop app), and each later line reopens one session with `"$c" --desktop --resume <id>`.
-- Arguments pass straight through: `-Hours 6` narrows the window (default 48 h), `-All` takes every non-archived session, `-GapSeconds 15` changes the spacing (default 12 s).
+- Arguments pass straight through: `-Hours 6` narrows the window (default 48 h), `-All` takes every non-archived session, `-GapSeconds 15` changes the spacing (default 12 s), `-IncludeChildren` also reopens child side-sessions.
+- Child side-sessions (sessions one session started from a task card) are listed under their parent as comments and are not reopened by default: a resume by id opens them as standalone tabs that no longer sit under the parent. Tell the user how many were left commented out and that `-IncludeChildren` (or uncommenting the lines) reopens them too.
 
 The same block is saved under `~/.claude/resume-all-latest.*` with a timestamped copy next to it.
 
